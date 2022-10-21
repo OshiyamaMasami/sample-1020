@@ -128,20 +128,3 @@ jobs:
           tag_name: ${{ needs.setup.outputs.tag-name }}
           release_name: Release ${{ needs.setup.outputs.tag-name }}
           body: ${{ steps.change-log.outputs.changelog }}
-
-  publish-gpr:
-    name: publish gpr
-    needs: [setup, publish, release-note]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 14
-          registry-url: https://npm.pkg.github.com/
-          scope: "@OshiyamaMasami"
-      - run: npm install
-      - run: npx tsc
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
