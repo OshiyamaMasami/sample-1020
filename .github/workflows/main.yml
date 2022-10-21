@@ -83,7 +83,7 @@ jobs:
       
       # ビルドする
       - name: packages build
-        run: npm rimraf dist && tsc -p tsconfig.json 
+        run: npx rimraf dist && npx tsc -p tsconfig.json 
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
       
