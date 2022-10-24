@@ -81,18 +81,24 @@ jobs:
             ${{ runner.os }}-node-
             ${{ runner.os }}-
       
+      # npm publish可能かのチェック
+      - name: check-publish
+        # npx can-npm-publish --verbose npm publish可能かのチェックリスト
+        # https://efcl.info/2018/06/21/can-npm-publish/
+        run: npx can-npm-publish --verbose
+        if: success()
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
       # ビルドする
       - name: packages build
         run: npx rimraf dist && npx tsc -p tsconfig.json 
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-      
+
       # npm publishする
       - name: publish
-        # npx can-npm-publish --verbose npm publish可能かのチェックリスト
-        # https://efcl.info/2018/06/21/can-npm-publish/
-        run: |
-          npx can-npm-publish --verbose && npm publish || echo "Does not publish"
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
