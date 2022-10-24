@@ -93,6 +93,7 @@ jobs:
         # https://efcl.info/2018/06/21/can-npm-publish/
         run: |
           npx can-npm-publish --verbose && npm publish || echo "Does not publish"
+        if: Eneeds.setup.outputs.tag-exist != 'true'
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
