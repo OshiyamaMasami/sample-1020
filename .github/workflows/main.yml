@@ -90,9 +90,17 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
+      # ビルド前処理
+      - name: check-packages-build
+        run: npx rimraf dist
+        if: success()
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+    
       # ビルドする
       - name: packages build
-        run: npx rimraf dist && npx tsc -p tsconfig.json 
+        run: npx tsc -p tsconfig.json 
+        if: success()
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
