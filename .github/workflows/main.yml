@@ -13,12 +13,10 @@ jobs:
     # Ubuntu最新版環境で実行する
     runs-on: ubuntu-latest
 
-    # ジョブに依存しているすべての下流のジョブから利用するe
+    # ジョブに依存しているすべての下流のジョブから利用する
     outputs:
       version: ${{ steps.package-version.outputs.version }}
       tag-name: v${{ steps.package-version.outputs.version }}
-      is-pre-verion: ${{ steps.pre-version.outputs.pre-version }}
-      #tag-exist: ${{ steps.tag-exist.outputs.exists }}
 
     steps:
         # すべてのタグとブランチのすべての履歴を取得
@@ -34,22 +32,6 @@ jobs:
         id: package-version
         # node -p 結果を出力 -e 渡した文字列をスクリプトとして実行
         run: node -p -e '`::set-output name=version::${require("./package.json").version}`'
-
-      - name: check-pre-release
-        # 範囲指定有無の判定
-        id: pre-version
-        run: node -p -e '`::set-output name=pre-version::${require("./package.json").version.includes("-")}`'
-
-        # タグが存在するかを判定
-#      - name: check-tag-exists
-#        uses: mukunku/tag-exists-action@v1.0.0
-#        id: check-tag
-#        with:
-#          tag: ${{ steps.package-version.outputs.version }}
-#        # 全てのstepsから参照できる
-#        env:
-#          # 最低限の権限で実行する
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   publish:
     name: publish
