@@ -27,7 +27,7 @@ jobs:
       - name: setup-node
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '14'
           registry-url: "https://npm.pkg.github.com"
 
       - name: set-package-version
@@ -62,7 +62,7 @@ jobs:
       - name: setup-node
         uses: actions/setup-node@v3
         with:
-          node-version: 16.x
+          node-version: 14.x
           registry-url: "https://npm.pkg.github.com"
 
       # キャッシュ
@@ -129,7 +129,7 @@ jobs:
       - name: setup-node
         uses: actions/setup-node@v3
         with:
-          node-version: 16.x
+          node-version: 14.x
           registry-url: "https://npm.pkg.github.com"
 
       # 前回のリースタグを取得するe
